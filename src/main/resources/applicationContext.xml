@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="registration" class="ru.otus.mkulikov.registration.RegistrationImpl" scope="prototype" />
+    <bean id="questions" class="ru.otus.mkulikov.questions.QuestionsLoaderImpl" scope="prototype" />
+
+    <bean id="questionsProcess" class="ru.otus.mkulikov.questions.QuestionsProcessImpl" scope="singleton" >
+        <constructor-arg name="questionsLoader" ref="questions" />
+    </bean>
+
+    <bean id="processor" class="ru.otus.mkulikov.processor.ProcessorImpl" scope="singleton" >
+        <constructor-arg name="registration" ref="registration" />
+        <constructor-arg name="questionsProcess" ref="questionsProcess" />
+    </bean>
+
+</beans>
