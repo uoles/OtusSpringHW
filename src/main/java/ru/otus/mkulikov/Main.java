@@ -1,10 +1,8 @@
 package ru.otus.mkulikov;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.otus.mkulikov.processor.Processor;
-
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
+import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
+import ru.otus.mkulikov.processor.ProcessorService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,11 +16,9 @@ public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         try {
-            Processor processor = (Processor) context.getBean("processor");
+            ProcessorService processor = context.getBean(ProcessorService.class);
             processor.startTest();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (QuestionsFileLoadingException e) {
             e.printStackTrace();
         } finally {
             context.close();
