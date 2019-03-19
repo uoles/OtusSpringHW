@@ -1,8 +1,10 @@
 package ru.otus.mkulikov.services.registration;
 
-import ru.otus.mkulikov.services.console.ConsoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.User;
+import ru.otus.mkulikov.services.console.ConsoleService;
 
 import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;
 
@@ -13,10 +15,12 @@ import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleSer
  * Time: 16:34
  */
 
+@Service
 public class RegistrationServiceImpl implements RegistrationService {
 
-    private ConsoleService consoleService;
+    private final ConsoleService consoleService;
 
+    @Autowired
     public RegistrationServiceImpl(ConsoleService consoleService) {
         this.consoleService = consoleService;
     }

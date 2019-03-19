@@ -3,6 +3,7 @@ package ru.otus.mkulikov.services.questions.dao;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
+import org.springframework.stereotype.Repository;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Time: 16:42
  */
 
+@Repository
 public class QuestionsDAOImpl implements QuestionsDAO {
 
     @SuppressWarnings({"rawtypes", "unchecked"})

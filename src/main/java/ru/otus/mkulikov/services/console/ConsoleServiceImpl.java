@@ -1,5 +1,7 @@
 package ru.otus.mkulikov.services.console;
 
+import org.springframework.stereotype.Service;
+
 import javax.annotation.PreDestroy;
 import java.util.Scanner;
 
@@ -10,9 +12,10 @@ import java.util.Scanner;
  * Time: 23:21
  */
 
+@Service
 public class ConsoleServiceImpl implements ConsoleService {
 
-    private Scanner in;
+    private final Scanner in;
 
     public ConsoleServiceImpl() {
         in = new Scanner(System.in);

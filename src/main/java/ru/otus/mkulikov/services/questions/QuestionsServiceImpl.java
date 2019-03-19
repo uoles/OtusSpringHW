@@ -1,9 +1,11 @@
 package ru.otus.mkulikov.services.questions;
 
-import ru.otus.mkulikov.services.console.ConsoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 import ru.otus.mkulikov.models.Question;
+import ru.otus.mkulikov.services.console.ConsoleService;
+import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 
 import java.util.List;
 
@@ -17,15 +19,17 @@ import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsD
  * Time: 16:41
  */
 
+@Service
 public class QuestionsServiceImpl implements QuestionsService {
 
     private final String c_delimeter = "---------------------------------------------------";
     private final String c_answerNumbers = "1234";
     private final String c_questionsFileName = "questions.csv";
 
-    private QuestionsDAO questionsDAO;
-    private ConsoleService consoleService;
+    private final QuestionsDAO questionsDAO;
+    private final ConsoleService consoleService;
 
+    @Autowired
     public QuestionsServiceImpl(QuestionsDAO questionsDAO, ConsoleService consoleService) {
         this.questionsDAO = questionsDAO;
         this.consoleService = consoleService;
