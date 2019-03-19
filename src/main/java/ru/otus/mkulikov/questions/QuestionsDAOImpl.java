@@ -9,7 +9,9 @@ import ru.otus.mkulikov.model.Question;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -22,13 +24,25 @@ import java.util.List;
 public class QuestionsDAOImpl implements QuestionsDAO {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Question> loadFile(String csvFilename) throws QuestionsFileLoadingException {
+    private List<Question> loadFile(String csvFilename) throws QuestionsFileLoadingException {
+        if (csvFilename == null) {
+            throw new QuestionsFileLoadingException("Имя файла не может быть null!");
+        }
+
         List<Question> questions = null;
         try {
-            CsvToBean csv = new CsvToBean();
-            File file = new File(getClass().getResource("/" + csvFilename).toURI());
+            URL url = getClass().getResource("/" + csvFilename);
+            if (url == null) {
+                throw new QuestionsFileLoadingException(
+                        String.format("Ошибка загрузки ресурса с именем %s!", csvFilename)
+                );
+            }
+
+            File file = new File(url.toURI());
 
             CSVReader csvReader = new CSVReader(new FileReader(file));
+            CsvToBean csv = new CsvToBean();
+
             questions = csv.parse(setColumMapping(), csvReader);
         } catch (FileNotFoundException e) {
             throw new QuestionsFileLoadingException("Файл с именем " + csvFilename + " не найден!", e);

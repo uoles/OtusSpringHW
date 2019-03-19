@@ -3,22 +3,22 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="console" class="ru.otus.mkulikov.console.ConsoleServiceImpl" scope="singleton" destroy-method="destroy" />
+    <bean id="consoleService" class="ru.otus.mkulikov.console.ConsoleServiceImpl" scope="singleton" destroy-method="destroy" />
 
-    <bean id="registration" class="ru.otus.mkulikov.registration.RegistrationServiceImpl" scope="prototype" >
-        <constructor-arg name="consoleService" ref="console" />
+    <bean id="registrationService" class="ru.otus.mkulikov.registration.RegistrationServiceImpl" scope="prototype" >
+        <constructor-arg name="consoleService" ref="consoleService" />
     </bean>
 
-    <bean id="questions" class="ru.otus.mkulikov.questions.QuestionsDAOImpl" scope="prototype" />
+    <bean id="questionsDAO" class="ru.otus.mkulikov.questions.QuestionsDAOImpl" scope="prototype" />
 
-    <bean id="questionsProcess" class="ru.otus.mkulikov.questions.QuestionsServiceImpl" scope="singleton" >
-        <constructor-arg name="questionsLoader" ref="questions" />
-        <constructor-arg name="consoleService" ref="console" />
+    <bean id="questionsService" class="ru.otus.mkulikov.questions.QuestionsServiceImpl" scope="singleton" >
+        <constructor-arg name="questionsDAO" ref="questionsDAO" />
+        <constructor-arg name="consoleService" ref="consoleService" />
     </bean>
 
-    <bean id="processor" class="ru.otus.mkulikov.processor.ProcessorServiceImpl" scope="singleton" >
-        <constructor-arg name="registration" ref="registration" />
-        <constructor-arg name="questionsProcess" ref="questionsProcess" />
+    <bean id="processorService" class="ru.otus.mkulikov.processor.ProcessorServiceImpl" scope="singleton" >
+        <constructor-arg name="registration" ref="registrationService" />
+        <constructor-arg name="questionsService" ref="questionsService" />
     </bean>
 
 </beans>

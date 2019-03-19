@@ -1,7 +1,10 @@
 package ru.otus.mkulikov.registration;
 
 import ru.otus.mkulikov.console.ConsoleService;
+import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.model.User;
+
+import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,7 +15,6 @@ import ru.otus.mkulikov.model.User;
 
 public class RegistrationServiceImpl implements RegistrationService {
 
-    private User user;
     private ConsoleService consoleService;
 
     public RegistrationServiceImpl(ConsoleService consoleService) {
@@ -20,7 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public void addNewUser() {
+    public void addNewUser() throws QuestionsFileLoadingException {
         getConsoleService().write("Введите свои данные");
         getConsoleService().write("Фамилия: ");
         String surname = getConsoleService().read();
@@ -28,11 +30,14 @@ public class RegistrationServiceImpl implements RegistrationService {
         getConsoleService().write("Имя: ");
         String name = getConsoleService().read();
 
-        user = new User(name, surname);
-        getConsoleService().write(String.format("Здравствуйте, %s %s!", surname, name));
+        User user = new User(name, surname);
+        getConsoleService().write(String.format("Здравствуйте, %s %s!", user.getSurname(), user.getName()));
     }
 
-    public ConsoleService getConsoleService() {
+    public ConsoleService getConsoleService() throws QuestionsFileLoadingException {
+        if (consoleService == null) {
+            throw new QuestionsFileLoadingException(c_error_load_consoleService);
+        }
         return consoleService;
     }
 }

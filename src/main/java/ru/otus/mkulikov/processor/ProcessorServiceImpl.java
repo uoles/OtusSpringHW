@@ -4,6 +4,9 @@ import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.questions.QuestionsService;
 import ru.otus.mkulikov.registration.RegistrationService;
 
+import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsService;
+import static ru.otus.mkulikov.constants.StringConstants.c_error_load_registrationService;
+
 /**
  * Created by IntelliJ IDEA.
  * Developer: Maksim Kulikov
@@ -13,25 +16,31 @@ import ru.otus.mkulikov.registration.RegistrationService;
 
 public class ProcessorServiceImpl implements ProcessorService {
 
-    private QuestionsService questionsProcess;
+    private QuestionsService questionsService;
     private RegistrationService registration;
 
-    public ProcessorServiceImpl(QuestionsService questionsProcess, RegistrationService registration) {
-        this.questionsProcess = questionsProcess;
+    public ProcessorServiceImpl(QuestionsService questionsService, RegistrationService registration) {
+        this.questionsService = questionsService;
         this.registration = registration;
     }
 
     @Override
     public void startTest() throws QuestionsFileLoadingException {
         getRegistration().addNewUser();
-        getQuestionsProcess().showQuestions();
+        getQuestionsService().showQuestions();
     }
 
-    public QuestionsService getQuestionsProcess() {
-        return questionsProcess;
+    public QuestionsService getQuestionsService() throws QuestionsFileLoadingException {
+        if (questionsService == null) {
+            throw new QuestionsFileLoadingException(c_error_load_questionsService);
+        }
+        return questionsService;
     }
 
-    public RegistrationService getRegistration() {
+    public RegistrationService getRegistration() throws QuestionsFileLoadingException {
+        if (registration == null) {
+            throw new QuestionsFileLoadingException(c_error_load_registrationService);
+        }
         return registration;
     }
 }

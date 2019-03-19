@@ -1,5 +1,7 @@
 package ru.otus.mkulikov.registration;
 
+import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
+
 /**
  * Created by IntelliJ IDEA.
  * Developer: Maksim Kulikov
@@ -9,5 +11,5 @@ package ru.otus.mkulikov.registration;
 
 public interface RegistrationService {
 
-    void addNewUser();
+    void addNewUser() throws QuestionsFileLoadingException;
 }

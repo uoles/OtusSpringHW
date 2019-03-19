@@ -6,6 +6,9 @@ import ru.otus.mkulikov.model.Question;
 
 import java.util.List;
 
+import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;
+import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsDAO;
+
 /**
  * Created by IntelliJ IDEA.
  * Developer: Maksim Kulikov
@@ -19,18 +22,18 @@ public class QuestionsServiceImpl implements QuestionsService {
     private final String c_answerNumbers = "1234";
     private final String c_questionsFileName = "questions.csv";
 
-    private QuestionsDAO questionsLoader;
+    private QuestionsDAO questionsDAO;
     private ConsoleService consoleService;
 
-    public QuestionsServiceImpl(QuestionsDAO questionsLoader, ConsoleService consoleService) {
-        this.questionsLoader = questionsLoader;
+    public QuestionsServiceImpl(QuestionsDAO questionsDAO, ConsoleService consoleService) {
+        this.questionsDAO = questionsDAO;
         this.consoleService = consoleService;
     }
 
     @Override
     public void showQuestions() throws QuestionsFileLoadingException {
         getConsoleService().write(c_delimeter);
-        List<Question> questions = getQuestionsLoader().getQuestions(c_questionsFileName);
+        List<Question> questions = getQuestionsDAO().getQuestions(c_questionsFileName);
 
         if (questions == null) {
             throw new QuestionsFileLoadingException("Список вопросов пуст!");
@@ -64,11 +67,17 @@ public class QuestionsServiceImpl implements QuestionsService {
         getConsoleService().write(c_delimeter);
     }
 
-    public QuestionsDAO getQuestionsLoader() {
-        return questionsLoader;
+    public QuestionsDAO getQuestionsDAO() throws QuestionsFileLoadingException {
+        if (questionsDAO == null) {
+            throw new QuestionsFileLoadingException(c_error_load_questionsDAO);
+        }
+        return questionsDAO;
     }
 
-    public ConsoleService getConsoleService() {
+    public ConsoleService getConsoleService() throws QuestionsFileLoadingException {
+        if (consoleService == null) {
+            throw new QuestionsFileLoadingException(c_error_load_consoleService);
+        }
         return consoleService;
     }
 }
