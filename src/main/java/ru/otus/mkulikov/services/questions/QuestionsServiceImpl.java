@@ -1,6 +1,8 @@
 package ru.otus.mkulikov.services.questions;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
@@ -20,11 +22,14 @@ import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsD
  */
 
 @Service
+@PropertySource("classpath:config.properties")
 public class QuestionsServiceImpl implements QuestionsService {
 
     private final String c_delimeter = "---------------------------------------------------";
     private final String c_answerNumbers = "1234";
-    private final String c_questionsFileName = "questions.csv";
+
+    @Value("${questions.file.name}")
+    private String questionsFileName ;
 
     private final QuestionsDAO questionsDAO;
     private final ConsoleService consoleService;
@@ -38,7 +43,7 @@ public class QuestionsServiceImpl implements QuestionsService {
     @Override
     public void showQuestions() throws QuestionsFileLoadingException {
         getConsoleService().write(c_delimeter);
-        List<Question> questions = getQuestionsDAO().getQuestions(c_questionsFileName);
+        List<Question> questions = getQuestionsDAO().getQuestions(questionsFileName);
 
         if (questions == null) {
             throw new QuestionsFileLoadingException("Список вопросов пуст!");

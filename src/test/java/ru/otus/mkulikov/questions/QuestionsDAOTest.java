@@ -25,20 +25,16 @@ class QuestionsDAOTest {
 
     @Test
     @DisplayName("Корректная загрузка вопросов")
-    public void loadQuestionsTest() {
-        try {
-            List<Question> questions = questionsDAO.getQuestions(c_questionsFileName);
+    public void loadQuestionsTest() throws QuestionsFileLoadingException {
+        List<Question> questions = questionsDAO.getQuestions(c_questionsFileName);
 
-            assertAll("questions",
-                    () -> assertNotNull(questions),
-                    () -> assertEquals(3, questions.size()),
-                    () -> assertEquals(c_test1, questions.get(0).getQuestion()),
-                    () -> assertEquals(c_test2, questions.get(1).getQuestion()),
-                    () -> assertEquals(c_test3, questions.get(2).getQuestion())
-            );
-        } catch (QuestionsFileLoadingException e) {
-            e.printStackTrace();
-        }
+        assertAll("questions",
+                () -> assertNotNull(questions),
+                () -> assertEquals(3, questions.size()),
+                () -> assertEquals(c_test1, questions.get(0).getQuestion()),
+                () -> assertEquals(c_test2, questions.get(1).getQuestion()),
+                () -> assertEquals(c_test3, questions.get(2).getQuestion())
+        );
     }
 
     @Test
