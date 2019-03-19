@@ -1,8 +1,8 @@
-package ru.otus.mkulikov.processor;
+package ru.otus.mkulikov.services.processor;
 
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.questions.QuestionsService;
-import ru.otus.mkulikov.registration.RegistrationService;
+import ru.otus.mkulikov.services.questions.QuestionsService;
+import ru.otus.mkulikov.services.registration.RegistrationService;
 
 import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsService;
 import static ru.otus.mkulikov.constants.StringConstants.c_error_load_registrationService;

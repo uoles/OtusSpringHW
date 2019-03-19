@@ -1,4 +1,4 @@
-package ru.otus.mkulikov.model;
+package ru.otus.mkulikov.models;
 
 import java.io.Serializable;
 

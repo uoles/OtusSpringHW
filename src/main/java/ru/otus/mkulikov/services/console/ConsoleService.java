@@ -1,4 +1,4 @@
-package ru.otus.mkulikov.console;
+package ru.otus.mkulikov.services.console;
 
 /**
  * Created by IntelliJ IDEA.

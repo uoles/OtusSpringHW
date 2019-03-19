@@ -1,15 +1,12 @@
-package ru.otus.mkulikov.questions;
+package ru.otus.mkulikov.services.questions.dao;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.model.Question;
+import ru.otus.mkulikov.models.Question;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URI;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -39,8 +36,7 @@ public class QuestionsDAOImpl implements QuestionsDAO {
             }
 
             File file = new File(url.toURI());
-
-            CSVReader csvReader = new CSVReader(new FileReader(file));
+            CSVReader csvReader=new CSVReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             CsvToBean csv = new CsvToBean();
 
             questions = csv.parse(setColumMapping(), csvReader);
@@ -48,6 +44,8 @@ public class QuestionsDAOImpl implements QuestionsDAO {
             throw new QuestionsFileLoadingException("Файл с именем " + csvFilename + " не найден!", e);
         } catch (URISyntaxException e) {
             throw new QuestionsFileLoadingException("Ошибка чтения файла!", e);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         return questions;
     }

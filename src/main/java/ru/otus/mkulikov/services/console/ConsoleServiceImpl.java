@@ -1,4 +1,4 @@
-package ru.otus.mkulikov.console;
+package ru.otus.mkulikov.services.console;
 
 import javax.annotation.PreDestroy;
 import java.util.Scanner;

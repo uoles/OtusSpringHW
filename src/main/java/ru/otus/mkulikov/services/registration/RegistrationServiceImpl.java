@@ -1,8 +1,8 @@
-package ru.otus.mkulikov.registration;
+package ru.otus.mkulikov.services.registration;
 
-import ru.otus.mkulikov.console.ConsoleService;
+import ru.otus.mkulikov.services.console.ConsoleService;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.model.User;
+import ru.otus.mkulikov.models.User;
 
 import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;
 

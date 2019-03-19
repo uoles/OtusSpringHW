@@ -3,6 +3,7 @@ package ru.otus.mkulikov.model;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.otus.mkulikov.models.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 

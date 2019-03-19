@@ -1,4 +1,4 @@
-package ru.otus.mkulikov.processor;
+package ru.otus.mkulikov.services.processor;
 
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 

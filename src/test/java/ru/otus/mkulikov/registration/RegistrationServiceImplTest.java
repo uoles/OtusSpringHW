@@ -3,6 +3,7 @@ package ru.otus.mkulikov.registration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
+import ru.otus.mkulikov.services.registration.RegistrationServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;

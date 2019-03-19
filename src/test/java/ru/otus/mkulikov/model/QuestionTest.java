@@ -3,6 +3,7 @@ package ru.otus.mkulikov.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.otus.mkulikov.models.Question;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

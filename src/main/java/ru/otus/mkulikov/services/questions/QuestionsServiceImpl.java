@@ -1,8 +1,9 @@
-package ru.otus.mkulikov.questions;
+package ru.otus.mkulikov.services.questions;
 
-import ru.otus.mkulikov.console.ConsoleService;
+import ru.otus.mkulikov.services.console.ConsoleService;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.model.Question;
+import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
+import ru.otus.mkulikov.models.Question;
 
 import java.util.List;
 

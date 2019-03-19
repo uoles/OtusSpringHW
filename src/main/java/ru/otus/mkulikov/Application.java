@@ -1,8 +1,10 @@
 package ru.otus.mkulikov;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.processor.ProcessorService;
+import ru.otus.mkulikov.services.processor.ProcessorService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,10 +13,12 @@ import ru.otus.mkulikov.processor.ProcessorService;
  * Time: 15:27
  */
 
-public class Main {
+@Configuration
+@ComponentScan
+public class Application {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         try {
             ProcessorService processor = context.getBean(ProcessorService.class);
             processor.startTest();
