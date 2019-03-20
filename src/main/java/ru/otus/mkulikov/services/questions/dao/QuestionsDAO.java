@@ -14,5 +14,5 @@ import java.util.List;
 
 public interface QuestionsDAO {
 
-    List<Question> getQuestions(String csvFilename) throws QuestionsFileLoadingException;
+    List<Question> getQuestions() throws QuestionsFileLoadingException;
 }

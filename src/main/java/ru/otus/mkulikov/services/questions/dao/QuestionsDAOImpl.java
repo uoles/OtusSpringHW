@@ -3,6 +3,7 @@ package ru.otus.mkulikov.services.questions.dao;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
@@ -22,8 +23,15 @@ import java.util.List;
 @Repository
 public class QuestionsDAOImpl implements QuestionsDAO {
 
+    private String csvFilename;
+
+    public QuestionsDAOImpl(@Value("${questions.file.name}") String csvFilename) {
+        this.csvFilename = csvFilename;
+    }
+
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private List<Question> loadFile(String csvFilename) throws QuestionsFileLoadingException {
+    @Override
+    public List<Question> getQuestions() throws QuestionsFileLoadingException {
         if (csvFilename == null) {
             throw new QuestionsFileLoadingException("Имя файла не может быть null!");
         }
@@ -47,7 +55,7 @@ public class QuestionsDAOImpl implements QuestionsDAO {
         } catch (URISyntaxException e) {
             throw new QuestionsFileLoadingException("Ошибка чтения файла!", e);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new QuestionsFileLoadingException("Ошибка кодировки файла!", e);
         }
         return questions;
     }
@@ -59,10 +67,5 @@ public class QuestionsDAOImpl implements QuestionsDAO {
         String[] columns = new String[]{"id", "question", "answer1", "answer2", "answer3", "answer4", "trueAnswer"};
         strategy.setColumnMapping(columns);
         return strategy;
-    }
-
-    @Override
-    public List<Question> getQuestions(String csvFilename) throws QuestionsFileLoadingException {
-        return loadFile(csvFilename);
     }
 }

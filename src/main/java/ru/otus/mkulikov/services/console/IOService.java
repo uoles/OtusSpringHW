@@ -7,7 +7,7 @@ package ru.otus.mkulikov.services.console;
  * Time: 23:21
  */
 
-public interface ConsoleService {
+public interface IOService {
 
     void write(String text);
 

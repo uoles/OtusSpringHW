@@ -14,10 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Класс QuestionsDAO")
 class QuestionsDAOTest {
 
-    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl();
-
-    private final String c_questionsFileName = "test_questions.csv";
-    private final String c_questionsBadFileName = "test.csv";
+    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl("test_questions.csv");
 
     private final String c_test1 = "Тест1";
     private final String c_test2 = "Тест2";
@@ -26,7 +23,7 @@ class QuestionsDAOTest {
     @Test
     @DisplayName("Корректная загрузка вопросов")
     public void loadQuestionsTest() throws QuestionsFileLoadingException {
-        List<Question> questions = questionsDAO.getQuestions(c_questionsFileName);
+        List<Question> questions = questionsDAO.getQuestions();
 
         assertAll("questions",
                 () -> assertNotNull(questions),
@@ -35,23 +32,5 @@ class QuestionsDAOTest {
                 () -> assertEquals(c_test2, questions.get(1).getQuestion()),
                 () -> assertEquals(c_test3, questions.get(2).getQuestion())
         );
-    }
-
-    @Test
-    @DisplayName("Корректное исключение на null")
-    public void loadNullExceptionQuestionsTest() {
-        Throwable exception = assertThrows(QuestionsFileLoadingException.class, () -> {
-            questionsDAO.getQuestions(null);
-        });
-        assertEquals("Имя файла не может быть null!", exception.getMessage());
-    }
-
-    @Test
-    @DisplayName("Корректное исключение на неверное имя файла")
-    public void loadExceptionQuestionsTest() {
-        Throwable exception = assertThrows(QuestionsFileLoadingException.class, () -> {
-            questionsDAO.getQuestions(c_questionsBadFileName);
-        });
-        assertEquals(String.format("Ошибка загрузки ресурса с именем %s!", c_questionsBadFileName), exception.getMessage());
     }
 }

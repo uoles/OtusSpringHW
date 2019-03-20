@@ -2,12 +2,8 @@ package ru.otus.mkulikov.services.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.services.questions.QuestionsService;
 import ru.otus.mkulikov.services.registration.RegistrationService;
-
-import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsService;
-import static ru.otus.mkulikov.constants.StringConstants.c_error_load_registrationService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,22 +25,8 @@ public class ProcessorServiceImpl implements ProcessorService {
     }
 
     @Override
-    public void startTest() throws QuestionsFileLoadingException {
-        getRegistration().addNewUser();
-        getQuestionsService().showQuestions();
-    }
-
-    public QuestionsService getQuestionsService() throws QuestionsFileLoadingException {
-        if (questionsService == null) {
-            throw new QuestionsFileLoadingException(c_error_load_questionsService);
-        }
-        return questionsService;
-    }
-
-    public RegistrationService getRegistration() throws QuestionsFileLoadingException {
-        if (registration == null) {
-            throw new QuestionsFileLoadingException(c_error_load_registrationService);
-        }
-        return registration;
+    public void startTest() {
+        registration.addNewUser();
+        questionsService.showQuestions();
     }
 }

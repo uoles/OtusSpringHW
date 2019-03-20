@@ -1,7 +1,5 @@
 package ru.otus.mkulikov.services.processor;
 
-import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-
 /**
  * Created by IntelliJ IDEA.
  * Developer: Maksim Kulikov
@@ -11,5 +9,5 @@ import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 
 public interface ProcessorService {
 
-    void startTest() throws QuestionsFileLoadingException;
+    void startTest();
 }

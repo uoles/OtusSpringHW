@@ -1,10 +1,10 @@
 package ru.otus.mkulikov.model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.mkulikov.models.Question;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -26,66 +26,22 @@ class QuestionTest {
     private final String c_answer3 = "Answer3";
     private final String c_answer4 = "Answer4";
 
-    private Question question;
-
-    @BeforeEach
-    public void createModelQuestion() {
-        question = new Question();
-        question.setId(c_id);
-        question.setQuestion(c_question);
-        question.setUserAnswer(c_userAnswer);
-        question.setTrueAnswer(c_trueAnswer);
-        question.setAnswer1(c_answer1);
-        question.setAnswer2(c_answer2);
-        question.setAnswer3(c_answer3);
-        question.setAnswer4(c_answer4);
-    }
-
     @Test
-    @DisplayName("Корректное заполнение id")
-    public void fillIdTest() {
-        assertEquals(c_id, question.getId());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение question")
+    @DisplayName("Корректное заполнение")
     public void fillQuestionTest() {
-        assertEquals(c_question, question.getQuestion());
-    }
+        Question question = new Question(
+                c_id, c_question, c_answer1, c_answer2, c_answer3, c_answer4, c_trueAnswer, c_userAnswer
+        );
 
-    @Test
-    @DisplayName("Корректное заполнение userAnswer")
-    public void fillUserAnsweTest() {
-        assertEquals(c_userAnswer, question.getUserAnswer());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение trueAnswer")
-    public void fillTrueAnsweTest() {
-        assertEquals(c_trueAnswer, question.getTrueAnswer());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение answer1")
-    public void fillAnswer1AnsweTest() {
-        assertEquals(c_answer1, question.getAnswer1());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение answer2")
-    public void fillAnswer2AnsweTest() {
-        assertEquals(c_answer2, question.getAnswer2());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение answer3")
-    public void fillAnswer3AnsweTest() {
-        assertEquals(c_answer3, question.getAnswer3());
-    }
-
-    @Test
-    @DisplayName("Корректное заполнение answer4")
-    public void fillAnswer4AnsweTest() {
-        assertEquals(c_answer4, question.getAnswer4());
+        assertAll("question",
+                () -> assertEquals(c_id, question.getId()),
+                () -> assertEquals(c_question, question.getQuestion()),
+                () -> assertEquals(c_userAnswer, question.getUserAnswer()),
+                () -> assertEquals(c_trueAnswer, question.getTrueAnswer()),
+                () -> assertEquals(c_answer1, question.getAnswer1()),
+                () -> assertEquals(c_answer2, question.getAnswer2()),
+                () -> assertEquals(c_answer3, question.getAnswer3()),
+                () -> assertEquals(c_answer4, question.getAnswer4())
+        );
     }
 }

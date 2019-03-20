@@ -13,11 +13,11 @@ import java.util.Scanner;
  */
 
 @Service
-public class ConsoleServiceImpl implements ConsoleService {
+public class ConsoleIOServiceImpl implements IOService {
 
     private final Scanner in;
 
-    public ConsoleServiceImpl() {
+    public ConsoleIOServiceImpl() {
         in = new Scanner(System.in);
     }
 

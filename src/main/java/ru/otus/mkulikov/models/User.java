@@ -1,5 +1,8 @@
 package ru.otus.mkulikov.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by IntelliJ IDEA.
  * Developer: Maksim Kulikov
@@ -9,27 +12,15 @@ package ru.otus.mkulikov.models;
 
 public class User {
 
+    @Setter
+    @Getter
     private final String name;
+    @Setter
+    @Getter
     private final String surname;
 
     public User(String name, String surname) {
         this.name = name;
         this.surname = surname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    @Override
-    public String toString() {
-        return "User {" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
     }
 }

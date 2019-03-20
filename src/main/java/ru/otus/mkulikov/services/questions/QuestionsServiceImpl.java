@@ -1,18 +1,13 @@
 package ru.otus.mkulikov.services.questions;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
-import ru.otus.mkulikov.services.console.ConsoleService;
+import ru.otus.mkulikov.services.console.IOService;
 import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 
 import java.util.List;
-
-import static ru.otus.mkulikov.constants.StringConstants.c_error_load_consoleService;
-import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsDAO;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,72 +17,54 @@ import static ru.otus.mkulikov.constants.StringConstants.c_error_load_questionsD
  */
 
 @Service
-@PropertySource("classpath:config.properties")
 public class QuestionsServiceImpl implements QuestionsService {
 
     private final String c_delimeter = "---------------------------------------------------";
     private final String c_answerNumbers = "1234";
 
-    @Value("${questions.file.name}")
-    private String questionsFileName ;
-
     private final QuestionsDAO questionsDAO;
-    private final ConsoleService consoleService;
+    private final IOService consoleService;
 
     @Autowired
-    public QuestionsServiceImpl(QuestionsDAO questionsDAO, ConsoleService consoleService) {
+    public QuestionsServiceImpl(QuestionsDAO questionsDAO, IOService consoleService) {
         this.questionsDAO = questionsDAO;
         this.consoleService = consoleService;
     }
 
     @Override
     public void showQuestions() throws QuestionsFileLoadingException {
-        getConsoleService().write(c_delimeter);
-        List<Question> questions = getQuestionsDAO().getQuestions(questionsFileName);
+        consoleService.write(c_delimeter);
+        List<Question> questions = questionsDAO.getQuestions();
 
         if (questions == null) {
             throw new QuestionsFileLoadingException("Список вопросов пуст!");
         }
 
         for (Question question : questions) {
-            getConsoleService().write(question.getQuestion());
-            getConsoleService().write(question.getAnswer1());
-            getConsoleService().write(question.getAnswer2());
-            getConsoleService().write(question.getAnswer3());
-            getConsoleService().write(question.getAnswer4());
+            consoleService.write(question.getQuestion());
+            consoleService.write(question.getAnswer1());
+            consoleService.write(question.getAnswer2());
+            consoleService.write(question.getAnswer3());
+            consoleService.write(question.getAnswer4());
 
             String answer = null;
             boolean okAnswer = false;
             int i = 0;
             while (!okAnswer && i < 4) {
                 System.out.println("Введите номер ответа: ");
-                answer = getConsoleService().read();
+                answer = consoleService.read();
                 okAnswer = c_answerNumbers.contains(answer);
                 i++;
             }
 
             question.setUserAnswer((!okAnswer && i == 4) ? "0" : answer);
-            getConsoleService().write(c_delimeter);
+            consoleService.write(c_delimeter);
         }
 
         long count = questions.stream()
                 .filter(obj -> obj.getTrueAnswer().equals(obj.getUserAnswer()))
                 .count();
-        getConsoleService().write("Количество правильных ответов: " + count + " из " + questions.size());
-        getConsoleService().write(c_delimeter);
-    }
-
-    public QuestionsDAO getQuestionsDAO() throws QuestionsFileLoadingException {
-        if (questionsDAO == null) {
-            throw new QuestionsFileLoadingException(c_error_load_questionsDAO);
-        }
-        return questionsDAO;
-    }
-
-    public ConsoleService getConsoleService() throws QuestionsFileLoadingException {
-        if (consoleService == null) {
-            throw new QuestionsFileLoadingException(c_error_load_consoleService);
-        }
-        return consoleService;
+        consoleService.write("Количество правильных ответов: " + count + " из " + questions.size());
+        consoleService.write(c_delimeter);
     }
 }

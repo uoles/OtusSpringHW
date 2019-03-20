@@ -3,6 +3,7 @@ package ru.otus.mkulikov;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.services.processor.ProcessorService;
 
@@ -15,6 +16,7 @@ import ru.otus.mkulikov.services.processor.ProcessorService;
 
 @Configuration
 @ComponentScan
+@PropertySource("classpath:config.properties")
 public class Application {
 
     public static void main(String[] args) {
