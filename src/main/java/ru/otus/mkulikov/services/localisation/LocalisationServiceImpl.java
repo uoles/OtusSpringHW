@@ -17,7 +17,7 @@ import java.util.Locale;
 public class LocalisationServiceImpl extends ReloadableResourceBundleMessageSource implements LocalisationService {
 
     private final Locale locale;
-    public static final Locale RUSSIAN = new Locale("ru");
+    private final Locale russian = new Locale("ru");
 
     public LocalisationServiceImpl(
             @Value("${locale.basename}") String basename,
@@ -30,7 +30,7 @@ public class LocalisationServiceImpl extends ReloadableResourceBundleMessageSour
 
         locale = (localeDefault != null)
                 ? new Locale(localeDefault)
-                : RUSSIAN;
+                : russian;
     }
 
     public String getValue(String key) {
