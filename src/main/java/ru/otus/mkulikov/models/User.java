@@ -1,7 +1,6 @@
 package ru.otus.mkulikov.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,13 +9,10 @@ import lombok.Setter;
  * Time: 15:29
  */
 
+@Data
 public class User {
 
-    @Setter
-    @Getter
     private final String name;
-    @Setter
-    @Getter
     private final String surname;
 
     public User(String name, String surname) {

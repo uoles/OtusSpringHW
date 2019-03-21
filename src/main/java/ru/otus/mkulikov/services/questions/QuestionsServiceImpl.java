@@ -52,7 +52,7 @@ public class QuestionsServiceImpl implements QuestionsService {
             while (!okAnswer && i < 4) {
                 consoleService.write(localisationService.getValue("enter.answer"));
                 answer = consoleService.read();
-                okAnswer = c_answerNumbers.contains(answer);
+                okAnswer = c_answerNumbers.contains(answer) && !answer.isEmpty();
                 i++;
             }
 

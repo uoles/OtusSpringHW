@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuestionsDAOTest {
 
     private final LocalisationServiceImpl localisationService = new LocalisationServiceImpl("/i18n/bundle", "UTF-8", "ru");
-    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService);
+    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService, "/questions");
 
     private final String c_test1 = "Тест1";
     private final String c_test2 = "Тест2";

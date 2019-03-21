@@ -1,7 +1,6 @@
 package ru.otus.mkulikov.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -12,31 +11,16 @@ import java.io.Serializable;
  * Time: 15:54
  */
 
+@Data
 public class Question implements Serializable {
 
-    @Setter
-    @Getter
     private String id;
-    @Setter
-    @Getter
     private String question;
-    @Setter
-    @Getter
     private String answer1;
-    @Setter
-    @Getter
     private String answer2;
-    @Setter
-    @Getter
     private String answer3;
-    @Setter
-    @Getter
     private String answer4;
-    @Setter
-    @Getter
     private String trueAnswer;
-    @Setter
-    @Getter
     private String userAnswer;
 
     public Question(String id, String question, String answer1, String answer2, String answer3, String answer4, String trueAnswer, String userAnswer) {

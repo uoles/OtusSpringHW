@@ -3,15 +3,17 @@ package ru.otus.mkulikov.services.questions.dao;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
 import ru.otus.mkulikov.services.localisation.LocalisationService;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -25,40 +27,31 @@ import java.util.List;
 public class QuestionsDAOImpl implements QuestionsDAO {
 
     private final LocalisationService localisationService;
+    private final String defaultFileDir;
 
-    public QuestionsDAOImpl(LocalisationService localisationService) {
+    public QuestionsDAOImpl(
+            LocalisationService localisationService,
+            @Value("${questions.default.dir}") String defaultFileDir
+    ) {
         this.localisationService = localisationService;
+        this.defaultFileDir = defaultFileDir;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public List<Question> getQuestions() throws QuestionsFileLoadingException {
-        String csvFilename = localisationService.getValue("csv.file.name");
-
-        if (csvFilename == null) {
-            throw new QuestionsFileLoadingException(localisationService.getValue("questions.load.null.filename"));
-        }
-
-        List<Question> questions = new ArrayList<Question>();
+        String csvFilename = defaultFileDir + "/" + localisationService.getValue("csv.file.name");
+        List<Question> questions;
         try {
-            URL url = getClass().getResource("/" + csvFilename);
-            if (url == null) {
-                throw new QuestionsFileLoadingException(
-                        localisationService.getValueWithParams("questions.load.error.filename", new String[] {csvFilename})
-                );
-            }
-
-            File file = new File(url.toURI());
-            CSVReader csvReader=new CSVReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-            CsvToBean csv = new CsvToBean();
-
-            questions = csv.parse(setColumMapping(), csvReader);
+            ClassPathResource resource = new ClassPathResource(csvFilename);
+            CSVReader csvReader = new CSVReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
+            questions = new CsvToBean().parse(setColumMapping(), csvReader);
         } catch (FileNotFoundException e) {
             throw new QuestionsFileLoadingException(localisationService.getValueWithParams("questions.find.error.filename", new String[] {csvFilename}), e);
-        } catch (URISyntaxException e) {
-            throw new QuestionsFileLoadingException(localisationService.getValue("questions.read.error"), e);
         } catch (UnsupportedEncodingException e) {
             throw new QuestionsFileLoadingException(localisationService.getValue("questions.encoding.error"), e);
+        } catch (IOException e) {
+            throw new QuestionsFileLoadingException(localisationService.getValue("questions.io.error"), e);
         }
         return questions;
     }
