@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
+import ru.otus.mkulikov.services.localisation.LocalisationServiceImpl;
 import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 import ru.otus.mkulikov.services.questions.dao.QuestionsDAOImpl;
 
@@ -14,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Класс QuestionsDAO")
 class QuestionsDAOTest {
 
-    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl("test_questions.csv");
+    private final LocalisationServiceImpl localisationService = new LocalisationServiceImpl("/i18n/bundle", "UTF-8", "ru");
+    private final QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService);
 
     private final String c_test1 = "Тест1";
     private final String c_test2 = "Тест2";

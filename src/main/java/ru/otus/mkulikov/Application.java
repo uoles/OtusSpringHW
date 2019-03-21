@@ -16,7 +16,7 @@ import ru.otus.mkulikov.services.processor.ProcessorService;
 
 @Configuration
 @ComponentScan
-@PropertySource("classpath:config.properties")
+@PropertySource("classpath:application.properties")
 public class Application {
 
     public static void main(String[] args) {

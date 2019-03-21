@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
 import ru.otus.mkulikov.services.console.IOService;
+import ru.otus.mkulikov.services.localisation.LocalisationService;
 import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 
 import java.util.List;
@@ -24,21 +25,19 @@ public class QuestionsServiceImpl implements QuestionsService {
 
     private final QuestionsDAO questionsDAO;
     private final IOService consoleService;
+    private final LocalisationService localisationService;
 
     @Autowired
-    public QuestionsServiceImpl(QuestionsDAO questionsDAO, IOService consoleService) {
+    public QuestionsServiceImpl(QuestionsDAO questionsDAO, IOService consoleService, LocalisationService localisationService) {
         this.questionsDAO = questionsDAO;
         this.consoleService = consoleService;
+        this.localisationService = localisationService;
     }
 
     @Override
     public void showQuestions() throws QuestionsFileLoadingException {
         consoleService.write(c_delimeter);
         List<Question> questions = questionsDAO.getQuestions();
-
-        if (questions == null) {
-            throw new QuestionsFileLoadingException("Список вопросов пуст!");
-        }
 
         for (Question question : questions) {
             consoleService.write(question.getQuestion());
@@ -51,7 +50,7 @@ public class QuestionsServiceImpl implements QuestionsService {
             boolean okAnswer = false;
             int i = 0;
             while (!okAnswer && i < 4) {
-                System.out.println("Введите номер ответа: ");
+                consoleService.write(localisationService.getValue("enter.answer"));
                 answer = consoleService.read();
                 okAnswer = c_answerNumbers.contains(answer);
                 i++;
@@ -64,7 +63,13 @@ public class QuestionsServiceImpl implements QuestionsService {
         long count = questions.stream()
                 .filter(obj -> obj.getTrueAnswer().equals(obj.getUserAnswer()))
                 .count();
-        consoleService.write("Количество правильных ответов: " + count + " из " + questions.size());
+
+        consoleService.write(
+                localisationService.getValueWithParams(
+                        "count.true.answers",
+                        new String[] {String.valueOf(count), String.valueOf(questions.size())}
+                )
+        );
         consoleService.write(c_delimeter);
     }
 }

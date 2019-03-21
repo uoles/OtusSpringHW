@@ -3,14 +3,15 @@ package ru.otus.mkulikov.services.questions.dao;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
+import ru.otus.mkulikov.services.localisation.LocalisationService;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,25 +24,27 @@ import java.util.List;
 @Repository
 public class QuestionsDAOImpl implements QuestionsDAO {
 
-    private String csvFilename;
+    private final LocalisationService localisationService;
 
-    public QuestionsDAOImpl(@Value("${questions.file.name}") String csvFilename) {
-        this.csvFilename = csvFilename;
+    public QuestionsDAOImpl(LocalisationService localisationService) {
+        this.localisationService = localisationService;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public List<Question> getQuestions() throws QuestionsFileLoadingException {
+        String csvFilename = localisationService.getValue("csv.file.name");
+
         if (csvFilename == null) {
-            throw new QuestionsFileLoadingException("Имя файла не может быть null!");
+            throw new QuestionsFileLoadingException(localisationService.getValue("questions.load.null.filename"));
         }
 
-        List<Question> questions = null;
+        List<Question> questions = new ArrayList<Question>();
         try {
             URL url = getClass().getResource("/" + csvFilename);
             if (url == null) {
                 throw new QuestionsFileLoadingException(
-                        String.format("Ошибка загрузки ресурса с именем %s!", csvFilename)
+                        localisationService.getValueWithParams("questions.load.error.filename", new String[] {csvFilename})
                 );
             }
 
@@ -51,11 +54,11 @@ public class QuestionsDAOImpl implements QuestionsDAO {
 
             questions = csv.parse(setColumMapping(), csvReader);
         } catch (FileNotFoundException e) {
-            throw new QuestionsFileLoadingException("Файл с именем " + csvFilename + " не найден!", e);
+            throw new QuestionsFileLoadingException(localisationService.getValueWithParams("questions.find.error.filename", new String[] {csvFilename}), e);
         } catch (URISyntaxException e) {
-            throw new QuestionsFileLoadingException("Ошибка чтения файла!", e);
+            throw new QuestionsFileLoadingException(localisationService.getValue("questions.read.error"), e);
         } catch (UnsupportedEncodingException e) {
-            throw new QuestionsFileLoadingException("Ошибка кодировки файла!", e);
+            throw new QuestionsFileLoadingException(localisationService.getValue("questions.encoding.error"), e);
         }
         return questions;
     }
