@@ -34,18 +34,10 @@ class LocalisationServiceImplTest {
     @Value("${test.default.en}")
     private String en;
 
-    private LocalisationService ruLocale;
-    private LocalisationService enLocale;
-
-    @BeforeEach
-    void init() {
-        ruLocale = new LocalisationServiceImpl(folder, encoding, ru);
-        enLocale = new LocalisationServiceImpl(folder, encoding, en);
-    }
-
     @Test
     @DisplayName("Проверка получения значения ru локали")
     void getValueRuTest() {
+        LocalisationService ruLocale = new LocalisationServiceImpl(folder, encoding, ru);
         String value = ruLocale.getValue("test.key");
 
         assertAll("value",
@@ -57,6 +49,7 @@ class LocalisationServiceImplTest {
     @Test
     @DisplayName("Проверка получения значения en локали")
     void getValueEnTest() {
+        LocalisationService enLocale = new LocalisationServiceImpl(folder, encoding, en);
         String value = enLocale.getValue("test.key");
 
         assertAll("value",
@@ -68,6 +61,7 @@ class LocalisationServiceImplTest {
     @Test
     @DisplayName("Проверка получения значения ru локали с параметром")
     void getValueRuWithParamsTest() {
+        LocalisationService ruLocale = new LocalisationServiceImpl(folder, encoding, ru);
         String value = ruLocale.getValueWithParams("test.key.params", new String[]{"При", "вет"});
 
         assertAll("value",
@@ -79,6 +73,7 @@ class LocalisationServiceImplTest {
     @Test
     @DisplayName("Проверка получения значения en локали с параметром")
     void getValueEnWithParamsTest() {
+        LocalisationService enLocale = new LocalisationServiceImpl(folder, encoding, en);
         String value = enLocale.getValueWithParams("test.key.params", new String[]{"Hel", "lo"});
 
         assertAll("value",

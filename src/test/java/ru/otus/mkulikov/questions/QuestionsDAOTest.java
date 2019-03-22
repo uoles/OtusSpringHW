@@ -25,9 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource("/test.properties")
 class QuestionsDAOTest {
 
-    private LocalisationServiceImpl localisationService;
-    private QuestionsDAO questionsDAO;
-
     @Value("${test.basename}")
     private String folder;
     @Value("${test.default.encoding}")
@@ -43,15 +40,12 @@ class QuestionsDAOTest {
     private final String c_test2 = "Тест2";
     private final String c_test3 = "Тест3";
 
-    @BeforeEach
-    void init() {
-        localisationService = new LocalisationServiceImpl(folder, encoding, ru);
-        questionsDAO = new QuestionsDAOImpl(localisationService, questionFolder);
-    }
-
     @Test
     @DisplayName("Корректная загрузка вопросов")
     public void loadQuestionsTest() throws QuestionsFileLoadingException {
+        LocalisationServiceImpl localisationService = new LocalisationServiceImpl(folder, encoding, ru);
+        QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService, questionFolder);
+
         List<Question> questions = questionsDAO.getQuestions();
 
         assertAll("questions",
