@@ -1,8 +1,8 @@
 package ru.otus.mkulikov;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.services.processor.ProcessorService;
@@ -14,20 +14,17 @@ import ru.otus.mkulikov.services.processor.ProcessorService;
  * Time: 15:27
  */
 
-@Configuration
-@ComponentScan
+@SpringBootApplication
 @PropertySource("classpath:application.properties")
 public class Application {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
+        ApplicationContext context = SpringApplication.run(Application.class);
         try {
             ProcessorService processor = context.getBean(ProcessorService.class);
             processor.startTest();
         } catch (QuestionsFileLoadingException e) {
             e.printStackTrace();
-        } finally {
-            context.close();
         }
     }
 }

@@ -8,6 +8,7 @@ import ru.otus.mkulikov.services.console.IOService;
 import ru.otus.mkulikov.services.localisation.LocalisationService;
 import ru.otus.mkulikov.services.questions.dao.QuestionsDAO;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 public class QuestionsServiceImpl implements QuestionsService {
 
     private final String c_delimeter = "---------------------------------------------------";
-    private final String c_answerNumbers = "1234";
+    private final List<String> answerNumbers = Arrays.asList(new String[]{"1", "2", "3", "4"});
 
     private final QuestionsDAO questionsDAO;
     private final IOService consoleService;
@@ -52,7 +53,7 @@ public class QuestionsServiceImpl implements QuestionsService {
             while (!okAnswer && i < 4) {
                 consoleService.write(localisationService.getValue("enter.answer"));
                 answer = consoleService.read();
-                okAnswer = c_answerNumbers.contains(answer) && !answer.isEmpty();
+                okAnswer = answerNumbers.contains(answer) && !answer.isEmpty();
                 i++;
             }
 
@@ -67,7 +68,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         consoleService.write(
                 localisationService.getValueWithParams(
                         "count.true.answers",
-                        new String[] {String.valueOf(count), String.valueOf(questions.size())}
+                        new String[]{String.valueOf(count), String.valueOf(questions.size())}
                 )
         );
         consoleService.write(c_delimeter);
