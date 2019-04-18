@@ -2,12 +2,11 @@ package ru.otus.mkulikov.questions;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.otus.mkulikov.Application;
+import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
 import ru.otus.mkulikov.services.localisation.LocalisationServiceImpl;
@@ -18,9 +17,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Created by IntelliJ IDEA.
+ * Developer: Maksim Kulikov
+ * Date: 2019-03-22
+ * Time: 13:58
+ */
+
 @DisplayName("Класс QuestionsDAO")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = Application.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @TestPropertySource("/test.properties")
 class QuestionsDAOTest {
 
