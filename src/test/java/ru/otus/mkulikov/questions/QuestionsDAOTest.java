@@ -3,10 +3,13 @@ package ru.otus.mkulikov.questions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.otus.mkulikov.config.LocaleProperties;
+import ru.otus.mkulikov.config.QuetionsProperties;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.models.Question;
 import ru.otus.mkulikov.services.localisation.LocalisationServiceImpl;
@@ -27,19 +30,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Класс QuestionsDAO")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource("/test.properties")
+@ActiveProfiles("ru")
 class QuestionsDAOTest {
 
-    @Value("${test.basename}")
-    private String folder;
-    @Value("${test.default.encoding}")
-    private String encoding;
-    @Value("${test.default.ru}")
-    private String ru;
-    @Value("${test.default.en}")
-    private String en;
-    @Value("${test.question.folder}")
-    private String questionFolder;
+    @Autowired
+    private LocaleProperties localeProperties;
+    @Autowired
+    private QuetionsProperties quetionsProperties;
 
     private final String c_test1 = "Тест1";
     private final String c_test2 = "Тест2";
@@ -48,8 +45,8 @@ class QuestionsDAOTest {
     @Test
     @DisplayName("Корректная загрузка вопросов")
     public void loadQuestionsTest() throws QuestionsFileLoadingException {
-        LocalisationServiceImpl localisationService = new LocalisationServiceImpl(folder, encoding, ru);
-        QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService, questionFolder);
+        LocalisationServiceImpl localisationService = new LocalisationServiceImpl(localeProperties);
+        QuestionsDAO questionsDAO = new QuestionsDAOImpl(localisationService, quetionsProperties);
 
         List<Question> questions = questionsDAO.getQuestions();
 

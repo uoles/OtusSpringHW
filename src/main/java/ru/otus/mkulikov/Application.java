@@ -2,8 +2,11 @@ package ru.otus.mkulikov;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
+import ru.otus.mkulikov.config.LocaleProperties;
+import ru.otus.mkulikov.config.QuetionsProperties;
 import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
 import ru.otus.mkulikov.services.processor.ProcessorService;
 
@@ -15,7 +18,8 @@ import ru.otus.mkulikov.services.processor.ProcessorService;
  */
 
 @SpringBootApplication
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
+@EnableConfigurationProperties({LocaleProperties.class, QuetionsProperties.class})
 public class Application {
 
     public static void main(String[] args) {

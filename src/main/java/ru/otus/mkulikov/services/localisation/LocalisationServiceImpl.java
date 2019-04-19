@@ -1,8 +1,9 @@
 package ru.otus.mkulikov.services.localisation;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
+import ru.otus.mkulikov.config.LocaleProperties;
 
 import java.util.Locale;
 
@@ -19,17 +20,13 @@ public class LocalisationServiceImpl extends ReloadableResourceBundleMessageSour
     private final Locale locale;
     private final Locale russian = new Locale("ru");
 
-    public LocalisationServiceImpl(
-            @Value("${locale.basename}") String basename,
-            @Value("${locale.default.encoding}") String defaultEncoding,
-            @Value("${locale.default}") String localeDefault
-    ) {
+    public LocalisationServiceImpl(LocaleProperties localeProperties) {
         super();
-        setBasename(basename);
-        setDefaultEncoding(defaultEncoding);
+        setBasename(localeProperties.getBasename());
+        setDefaultEncoding(localeProperties.getEncoding());
 
-        locale = (localeDefault != null)
-                ? new Locale(localeDefault)
+        locale = (localeProperties.getDefaultLocale() != null)
+                ? new Locale(localeProperties.getDefaultLocale())
                 : russian;
     }
 
