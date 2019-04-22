@@ -9,4 +9,4 @@ questions:
 
 spring:
   banner:
-    location: classpath:./banner.txt
+    location: "classpath:banner.txt"
