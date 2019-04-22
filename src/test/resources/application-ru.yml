@@ -1,8 +1,8 @@
 locale:
-  basename: /locale/bundle
-  defaultLocale: ru
-  encoding: UTF-8
+  basename: "/locale/bundle"
+  defaultLocale: "ru"
+  encoding: "UTF-8"
 
 questions:
   default:
-    dir: /questions
+    dir: "/questions"

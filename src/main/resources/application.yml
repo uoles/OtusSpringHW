@@ -1,11 +1,11 @@
 locale:
-  basename: /i18n/bundle
-  defaultLocale: ru
-  encoding: UTF-8
+  basename: "/i18n/bundle"
+  defaultLocale: "ru"
+  encoding: "UTF-8"
 
 questions:
   default:
-    dir: /questions
+    dir: "/questions"
 
 spring:
   banner:
