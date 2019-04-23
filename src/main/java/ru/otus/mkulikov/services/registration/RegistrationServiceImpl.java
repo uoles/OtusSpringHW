@@ -1,6 +1,5 @@
 package ru.otus.mkulikov.services.registration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.models.User;
 import ru.otus.mkulikov.services.console.IOService;
@@ -19,7 +18,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final IOService consoleService;
     private final LocalisationService localisationService;
 
-    @Autowired
     public RegistrationServiceImpl(IOService consoleService, LocalisationService localisationService) {
         this.consoleService = consoleService;
         this.localisationService = localisationService;

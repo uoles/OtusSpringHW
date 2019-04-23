@@ -1,6 +1,5 @@
 package ru.otus.mkulikov.services.localisation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.mkulikov.config.LocaleProperties;

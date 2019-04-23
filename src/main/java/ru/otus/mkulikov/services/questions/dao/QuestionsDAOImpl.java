@@ -26,7 +26,6 @@ import java.util.List;
 @Repository
 public class QuestionsDAOImpl implements QuestionsDAO {
 
-    private final String c_file_encoding = "UTF-8";
     private final LocalisationService localisationService;
     private final String defaultFileDir;
 
@@ -42,7 +41,7 @@ public class QuestionsDAOImpl implements QuestionsDAO {
         List<Question> questions;
         try {
             ClassPathResource resource = new ClassPathResource(csvFilename);
-            CSVReader csvReader = new CSVReader(new InputStreamReader(resource.getInputStream(), c_file_encoding));
+            CSVReader csvReader = new CSVReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
             questions = new CsvToBean().parse(setColumMapping(), csvReader);
         } catch (FileNotFoundException e) {
             throw new QuestionsFileLoadingException(localisationService.getValueWithParams("questions.find.error.filename", new String[] {csvFilename}), e);
@@ -58,15 +57,7 @@ public class QuestionsDAOImpl implements QuestionsDAO {
     private ColumnPositionMappingStrategy setColumMapping() {
         ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
         strategy.setType(Question.class);
-        strategy.setColumnMapping(new String[]{
-                Question.c_id,
-                Question.c_question,
-                Question.c_answer1,
-                Question.c_answer2,
-                Question.c_answer3,
-                Question.c_answer4,
-                Question.c_trueAnswer
-        });
+        strategy.setColumnMapping(new String[]{"id", "question", "answer1", "answer2", "answer3", "answer4", "trueAnswer"});
         return strategy;
     }
 }
