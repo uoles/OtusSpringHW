@@ -2,8 +2,8 @@ package ru.otus.mkulikov.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.mkulikov.exceptions.QuestionsFileLoadingException;
-import ru.otus.mkulikov.services.processor.ProcessorService;
+import ru.otus.mkulikov.app.exceptions.QuestionsFileLoadingException;
+import ru.otus.mkulikov.app.services.processor.ProcessorService;
 
 /**
  * Created by IntelliJ IDEA.
