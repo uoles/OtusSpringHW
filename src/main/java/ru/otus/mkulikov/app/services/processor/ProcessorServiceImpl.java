@@ -23,8 +23,12 @@ public class ProcessorServiceImpl implements ProcessorService {
     }
 
     @Override
+    public boolean registry(String userName, String userSurname) {
+        return registration.addNewUser(userName, userSurname);
+    }
+
+    @Override
     public void startTest() {
-        registration.addNewUser();
         questionsService.showQuestions();
     }
 }

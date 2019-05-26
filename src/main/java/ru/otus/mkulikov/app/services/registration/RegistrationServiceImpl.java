@@ -32,7 +32,34 @@ public class RegistrationServiceImpl implements RegistrationService {
         consoleService.write(localisationService.getValue("enter.your.name"));
         String name = consoleService.read();
 
-        User user = new User(name, surname);
+        checkUser(new User(name, surname));
+    }
+
+    @Override
+    public boolean addNewUser(String userName, String userSurname) {
+        return checkUser(new User(userName, userSurname));
+    }
+
+    private boolean checkUser(User user) {
+        String name = user.getName().replace(" ", "");
+        String surname = user.getSurname().replace(" ", "");
+
+        if (name != null && !name.isEmpty() && surname != null && !surname.isEmpty()) {
+            greetingUser(new User(name, surname));
+            return true;
+        } else {
+            wrongUser();
+            return false;
+        }
+    }
+
+    private void wrongUser() {
+        consoleService.write(
+                localisationService.getValue("hello.user.fail")
+        );
+    }
+
+    private void greetingUser(User user) {
         consoleService.write(
                 localisationService.getValueWithParams("hello.user", new String[] {user.getName(), user.getSurname()})
         );

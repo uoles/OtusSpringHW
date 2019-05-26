@@ -39,24 +39,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         List<Question> questions = questionsDAO.getQuestions();
 
         for (Question question : questions) {
-            consoleService.write(question.getQuestion());
-            consoleService.write(question.getAnswer1());
-            consoleService.write(question.getAnswer2());
-            consoleService.write(question.getAnswer3());
-            consoleService.write(question.getAnswer4());
-
-            String answer = null;
-            boolean isOkAnswer = false;
-            int i = 0;
-            while (!isOkAnswer && i < 4) {
-                consoleService.write(localisationService.getValue("enter.answer"));
-                answer = consoleService.read();
-                isOkAnswer = answerNumbers.contains(answer) && !answer.isEmpty();
-                i++;
-            }
-
-            question.setUserAnswer((!isOkAnswer && i == 4) ? "0" : answer);
-            consoleService.write(c_delimeter);
+            printQuestion(question);
         }
 
         long count = questions.stream()
@@ -69,6 +52,27 @@ public class QuestionsServiceImpl implements QuestionsService {
                         new String[]{String.valueOf(count), String.valueOf(questions.size())}
                 )
         );
+        consoleService.write(c_delimeter);
+    }
+
+    private void printQuestion(Question question) {
+        consoleService.write(question.getQuestion());
+        consoleService.write(question.getAnswer1());
+        consoleService.write(question.getAnswer2());
+        consoleService.write(question.getAnswer3());
+        consoleService.write(question.getAnswer4());
+
+        String answer = null;
+        boolean isOkAnswer = false;
+        int i = 0;
+        while (!isOkAnswer && i < 4) {
+            consoleService.write(localisationService.getValue("enter.answer"));
+            answer = consoleService.read();
+            isOkAnswer = answerNumbers.contains(answer) && !answer.isEmpty();
+            i++;
+        }
+
+        question.setUserAnswer((!isOkAnswer && i == 4) ? "0" : answer);
         consoleService.write(c_delimeter);
     }
 }

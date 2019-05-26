@@ -10,4 +10,6 @@ package ru.otus.mkulikov.app.services.registration;
 public interface RegistrationService {
 
     void addNewUser();
+
+    boolean addNewUser(String userName, String userSurname);
 }

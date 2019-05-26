@@ -9,5 +9,7 @@ package ru.otus.mkulikov.app.services.processor;
 
 public interface ProcessorService {
 
+    boolean registry(String userName, String userSurname);
+
     void startTest();
 }
