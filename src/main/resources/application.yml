@@ -1,0 +1,12 @@
+locale:
+  basename: "/i18n/bundle"
+  defaultLocale: "ru"
+  encoding: "UTF-8"
+
+questions:
+  default:
+    dir: "/questions"
+
+spring:
+  banner:
+    location: "classpath:banner.txt"
